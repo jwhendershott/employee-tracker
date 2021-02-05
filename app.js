@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
+const consTable = require('console.table');
 const chalk = require('chalk');
-const printTable = require('console-table-printer');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -62,7 +62,7 @@ function viewDepts() {
     connection.query(query, function(err, res) {
         console.log('Departments:');
         res.forEach(department => {
-            console.log(`ID: ${department.id} Name: ${department.name}`);
+            console.table(res);
         });
         init();
     });
@@ -70,12 +70,23 @@ function viewDepts() {
 
 function viewRoles() {
     const query = 'SELECT * FROM role';
+    
     connection.query(query, function(err, res) {
         console.log('Roles:');
         res.forEach(role => {
-            console.log(`ID: ${role.id} Title: ${role.title} Salary: ${role.salary}`);
+            console.table(res);
         });
         init();
     });
 }
 
+function viewEmps() {
+    const query = 'SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id';
+    connection.query(query, function(err, res) {
+        console.log('Employees:');
+        res.forEach(employee => {
+            console.table(res)
+        });
+        init();
+    });
+}

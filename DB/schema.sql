@@ -22,5 +22,5 @@ create table employee(
 	role_id int not null,
 	manager_id int not null,
     foreign key (role_id) references role(id),
-    foreign key (manager_id) references employee(id)
+    foreign key (manager_id) references employee(id) null
 );
