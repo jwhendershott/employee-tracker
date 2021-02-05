@@ -1,75 +1,139 @@
-# Unit 12: MySQL
+# Unit 12 MySQL Homework: Employee Tracker
 
-## Overview
+Developers are often tasked with creating interfaces that make it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as **C**ontent **M**anagement **S**ystems. In this homework assignment, your challenge is to architect and build a solution for managing a company's employees using node, inquirer, and MySQL.
 
-In this unit, we add the final layer to our stack: the database. While it is the last, it is by no means the least. Databases are the foundation of full-stack web applications. Although we began our journey on the client-side, it will be more useful from this point on to approach application development from the bottom up. When using our applications, what is most important to our users is being able to store and retrieve data. Once we determine how we will model that data, we can then set about determining the best way to deliver it to the front-end via our server-side API. 
+## Instructions
 
-In simplest terms, a database is a collection of data stored electronically. The database management system (DBMS) we will be using in this unit is MySQL. MySQL is the most popular SQL database. The SQL in MySQL is short for Structured Query Language, and that structure is _relational_. A relational database stores and finds data based on its relationship to other data in the database. Relational databases are tabular, meaning data is stored in tables composed of rows and columns, much like a spreadsheet. 
+Design the following database schema containing three tables:
 
-We will begin the unit using GUI's, such as MySQL Workbench, to interface with our databases, but by the end of the unit you should be proficient using the MySQL command line prompt. We will then connect our Node.js servers to our MySQL databases to perform queries based on client requests and return responses accordingly. 
+![Database Schema](Assets/schema.png)
 
-## Key Topics
+* **department**:
 
-* MySQL Workbench
+  * **id** - INT PRIMARY KEY
+  * **name** - VARCHAR(30) to hold department name
 
-* MySQL command line prompt (MySQL Shell)
+* **role**:
 
-* Creating and dropping databases and tables
+  * **id** - INT PRIMARY KEY
+  * **title** -  VARCHAR(30) to hold role title
+  * **salary** -  DECIMAL to hold role salary
+  * **department_id** -  INT to hold reference to department role belongs to
 
-* schema.sql and seeds.sql files
+* **employee**:
 
-* CRUD
+  * **id** - INT PRIMARY KEY
+  * **first_name** - VARCHAR(30) to hold employee first name
+  * **last_name** - VARCHAR(30) to hold employee last name
+  * **role_id** - INT to hold reference to role employee has
+  * **manager_id** - INT to hold reference to another employee that manages the employee being Created. This field may be null if the employee has no manager
+  
+Build a command-line application that at a minimum allows the user to:
 
-* Primary and foreign keys
+  * Add departments, roles, employees
 
-* Prepared statements
+  * View departments, roles, employees
 
-* Joins
+  * Update employee roles
 
-* ACID
+Bonus points if you're able to:
 
-## Comprehension Check
+  * Update employee managers
 
-You will be employer-ready if you can answer the following questions:
+  * View employees by manager
 
-1. What is CRUD?
+  * Delete departments, roles, and employees
 
-2. What is ACID? 
+  * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
 
-3. How does one join data between tables? 
+We can frame this challenge as follows:
 
-## Learning Objectives
+```
+As a business owner
+I want to be able to view and manage the departments, roles, and employees in my company
+So that I can organize and plan my business
+```
 
-You will be employer-competitive if you are able to:
+How do you deliver this? Here are some guidelines:
 
-* Configure a Node.js application to connect to a MySQL instance
+* Use the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to your MySQL database and perform queries.
 
-* Create and drop databases and tables 
+* Use [InquirerJs](https://www.npmjs.com/package/inquirer/v/0.2.3) NPM package to interact with the user via the command-line.
 
-* Explain and execute CRUD methods
+* Use [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console. There is a built-in version of `console.table`, but the NPM package formats the data a little better for our purposes.
 
-* Use both a GUI and the MySQL command line prompt to interface with a database
+* You may wish to have a separate file containing functions for performing specific SQL queries you'll need to use. Could a constructor function or a class be helpful for organizing these?
 
-* Create schema and seed files for development and production
+* You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's activities if you need a refresher on this.
 
-* Write join statements to establish relations between data in one or more tables
+![Employee Tracker](Assets/employee-tracker.gif)
 
-## Homework: Employee Tracker
+### Hints
 
-* Developers are often tasked with creating interfaces that make it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as **C**ontent **M**anagement **S**ystems. In this homework assignment, your challenge is to architect and build a solution for managing a company's employees using node, inquirer, and MySQL.
+* You may wish to include a `seed.sql` file to pre-populate your database. This will make development of individual features much easier.
 
-## Heads Up
+* Focus on getting the basic functionality completed before working on more advanced features.
 
-* Starting this unit, you will use MySQL. Be sure to have the MySQL Server and Workbench installed on your computer and be able to initialize the MySQL Shell **before** attending your classes. You can follow these installation instructions for your [Mac](./04-Important/mysql-mac-guide.md) or [Windows](./04-Important/mysql-windows-guide.md) computers.
+* Review the week's activities for a refresher on MySQL.
 
-## Helpful Links
+* Check out [SQL Bolt](https://sqlbolt.com/) for some extra MySQL help.
 
-* [SQL](https://en.wikipedia.org/wiki/SQL)
+## Minimum Requirements
 
-* [MySQL](https://en.wikipedia.org/wiki/MySQL)
+* Functional application.
 
-* [MySQL - W3 Schools](http://www.w3schools.com/sql/)
+* GitHub repository with a unique name and a README describing the project.
 
-* [MySQL Workbench Documentation](http://dev.mysql.com/doc/workbench/en/)
+* The command-line application should allow users to:
 
-* [MySQL NPM Package](https://www.npmjs.com/package/mysql)
+  * Add departments, roles, employees
+
+  * View departments, roles, employees
+
+  * Update employee roles
+
+## Bonus
+
+* The command-line application should allow users to:
+
+  * Update employee managers
+
+  * View employees by manager
+
+  * Delete departments, roles, and employees
+
+  * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
+
+## Commit Early and Often
+
+One of the most important skills to master as a web developer is version control. Building the habit of committing via Git is important for two reasons:
+
+* Your commit history is a signal to employers that you are actively working on projects and learning new skills.
+
+* Your commit history allows you to revert your codebase in the event that you need to return to a previous state.
+
+Follow these guidelines for committing:
+
+* Make single-purpose commits for related changes to ensure a clean, manageable history. If you are fixing two issues, make two commits.
+
+* Write descriptive, meaningful commit messages so that you and anyone else looking at your repository can easily understand its history.
+
+* Don't commit half-done work, for the sake of your collaborators (and your future self!).
+
+* Test your application before you commit to ensure functionality at every step in the development process.
+
+We would like you to have well over 200 commits by graduation, so commit early and often!
+
+**Important**: You will be committing a file that contains your database credentials. Make sure your MySQL password is not used for any other personal accounts, because it will be visible on GitHub. In upcoming lessons, you will learn how to better secure this password, or you can start researching npm packages now that could help you.
+
+
+## Submission on BCS
+
+You are required to submit the following:
+
+* The URL of the GitHub repository
+
+* A video demonstrating the entirety of the app's functionality 
+
+- - -
+© 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
