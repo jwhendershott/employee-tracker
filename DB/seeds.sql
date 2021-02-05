@@ -1,7 +1,7 @@
 use employee_trackerDB;
 
 insert into department (name) values ("Accounting");
-insert into department (name) values ("Mad Scientist");
+insert into department (name) values ("Management");
 insert into department (name) values ("Delivery");
 insert into department (name) values ("Staff");
 
