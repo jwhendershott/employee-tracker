@@ -60,10 +60,9 @@ function init() {
 function viewDepts() {
     const query = 'SELECT * FROM department';
     connection.query(query, function(err, res) {
-        console.log('Departments:');
-        res.forEach(department => {
+        console.log('Departments:');{
             console.table(res);
-        });
+        };
         init();
     });
 }
@@ -72,10 +71,9 @@ function viewRoles() {
     const query = 'SELECT * FROM role';
     
     connection.query(query, function(err, res) {
-        console.log('Roles:');
-        res.forEach(role => {
+        console.log('Roles:');{
             console.table(res);
-        });
+        };
         init();
     });
 }
@@ -84,9 +82,56 @@ function viewEmps() {
     const query = 'SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id';
     connection.query(query, function(err, res) {
         console.log('Employees:');
-        res.forEach(employee => {
+
             console.table(res)
         });
         init();
-    });
+    };
+
+
+function addDept() {
+    inquirer
+    .prompt(
+        {
+            type: 'input',
+            name: 'dept',
+            message: 'What department would you like to add?'
+        })
+        .then(function(data) {
+            const query = 'INSERT INTO department (name) VALUES (?)';
+            connection.query(query, data.dept, function(err, res) {
+                if (err) throw err;
+                console.log(`${data.dept} added.`);
+            });
+            viewDepts();
+        })
 }
+
+function addRole() {
+    inquirer
+    .prompt(
+        {
+            type: 'input',
+            name: 'role',
+            message: 'What role would you like to add?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for this role?'
+        })
+        .then(function(data) {
+            connection.query(
+                'INSERT INTO role (title), (salary) VALUES (?, ?)',
+            {
+                title: data.role,
+                salary: data.salary,
+            },
+            (err) => {
+                if (err) throw err;
+                console.log(`${data.role} added.`);
+            viewRoles();
+        });
+});
+};
+
