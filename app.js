@@ -109,7 +109,7 @@ function addDept() {
 
 function addRole() {
     inquirer
-    .prompt(
+    .prompt([
         {
             type: 'input',
             name: 'role',
@@ -119,7 +119,7 @@ function addRole() {
             type: 'input',
             name: 'salary',
             message: 'What is the salary for this role?'
-        })
+        }])
         .then(function(data) {
             connection.query(
                 'INSERT INTO role (title), (salary) VALUES (?, ?)',
@@ -129,7 +129,7 @@ function addRole() {
             },
             (err) => {
                 if (err) throw err;
-                console.log(`${data.role} added.`);
+                console.log(`Role added.`);
             viewRoles();
         });
 });
@@ -137,7 +137,7 @@ function addRole() {
 
 function addEmp() {
     inquirer
-    .prompt(
+    .prompt([
         {
             type: 'input',
             name: 'empFirst',
@@ -147,10 +147,10 @@ function addEmp() {
             type: 'input',
             name: 'empLast',
             message: "What is the employee's last name?"
-        })
+        }])
         .then(function(data) {
             connection.query(
-                'INSERT INTO empoyee (first_name), (last_name) VALUES (?, ?)',
+                'INSERT INTO employee (first_name), (last_name) VALUES (?, ?)',
             {
                 first_name: data.empFirst,
                 last_name: data.empLast,
@@ -162,4 +162,3 @@ function addEmp() {
         });
 });
 };
-
