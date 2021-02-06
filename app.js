@@ -135,3 +135,31 @@ function addRole() {
 });
 };
 
+function addEmp() {
+    inquirer
+    .prompt(
+        {
+            type: 'input',
+            name: 'empFirst',
+            message: "What is the employee's first name?"
+        },
+        {
+            type: 'input',
+            name: 'empLast',
+            message: "What is the employee's last name?"
+        })
+        .then(function(data) {
+            connection.query(
+                'INSERT INTO empoyee (first_name), (last_name) VALUES (?, ?)',
+            {
+                first_name: data.empFirst,
+                last_name: data.empLast,
+            },
+            (err) => {
+                if (err) throw err;
+                console.log(`Employee added.`);
+            viewEmps();
+        });
+});
+};
+
